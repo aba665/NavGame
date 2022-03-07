@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #334250;
+    width: 100%;
+    height: 100vh;
+   
+
+
+}
+.navJog{
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/Nave.png');
+    background-repeat: no-repeat;
+    position: absolute;
+
+}
+#medidorPlaneta{
+    width: 250px;
+    height: 20px;
+    background-color: #585858bb;
+}
+#barraPlaneta{
+    border: 2px solid rgb(2, 2, 2);
+    width: 250px;
+    height: 20px;
+    background-color: #811a9b;
+}
+.drawnFire{
+    width: 5px;
+    height: 8px;
+    background-color: red;
+    position: absolute;
+
+}
