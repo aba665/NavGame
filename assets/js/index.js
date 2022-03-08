@@ -8,6 +8,7 @@ let telaWidth;
 let telaHeight;
 let player;
 let velPlayer;
+let velFire;
 
 
 function teclaDown(){
@@ -26,7 +27,7 @@ function teclaDown(){
     }
 
     if(tecla == 32){
-        onFire(positionxJ, positionyJ - 100)
+        onFire(positionxJ ,positionyJ)
     }
 }
 
@@ -45,10 +46,28 @@ function teclaUp(){
 function onFire(x, y){
     let creationFire = document.createElement("div");
     creationFire.setAttribute("class", "drawnFire");
-    creationFire.setAttribute("style", `top: ${x}px; left: ${y}px`);
+    creationFire.setAttribute("style", `top: ${y}px; left: ${x}px`);
     
     document.body.appendChild(creationFire);
     
+}
+
+function controllerFire(){
+    let fires = document.getElementsByClassName("drawnFire");
+    let tamFire = fires.length;
+
+    for(let i = 0; i < tamFire; i++) {
+        if(fires[i]){
+            let ptFire = fires[i].offsetTop;
+            ptFire -= velFire;
+            fires[i].style.top = `${ptFire}px`;
+    
+        if(ptFire < 0){
+            fires[i].remove();
+        }
+    }
+    }
+
 }
 function contollerPlayer(){
 
@@ -60,7 +79,8 @@ function contollerPlayer(){
 
 function looping(){
     if(jogo){
-        contollerPlayer()
+        contollerPlayer();
+        controllerFire();
     } 
     frames = requestAnimationFrame(looping);
 
@@ -79,6 +99,7 @@ function inicia(){
     player = document.getElementById("navJog");
     player.style.top = positionyJ + "px";
     player.style.left = positionxJ + "px";
+    velFire = 5;
     
     looping();
 }
