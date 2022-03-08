@@ -26,24 +26,45 @@ let pontuation;
 function teclaDown(){
     let tecla = event.keyCode;
     if(tecla == 38){
+       
         directionyJ += -1;
+        if(positionyJ <= 0){
+            positionyJ = telaHeight;  
+        }
+
     } else if(tecla == 40){
+        
         directionyJ += 1;
+        if(positionyJ >= telaHeight){
+            positionyJ = 0;  
+        }
+
     }
 
     if(tecla == 37){
+
         directionxJ += -1;
+        if(positionxJ <= 0){
+            positionxJ = telaWidth;  
+        }
+
     }else if(tecla == 39){
+        
         directionxJ += 1;
+        if(positionxJ >= telaWidth){
+            positionxJ = 0;  
+        }
+
     }
 
     if(tecla == 32){
         onFire(positionxJ ,positionyJ)
     }
+    
 }
 
 function teclaUp(){
-    // console.log('tecla up clicada');
+    
     let tecla = event.keyCode;
 
     if((tecla == 38) || (tecla == 40)){
@@ -68,42 +89,50 @@ function controllerFire(){
     let tamFire = fires.length;
     
     for(let i = 0; i < tamFire; i++) {
+        
         if(fires[i]){
             let ptFire = fires[i].offsetTop;
             ptFire -= velFire;
             fires[i].style.top = `${ptFire}px`;
             destroyAsteroid(fires[i]);
-        if(ptFire < 0){
-            fires[i].remove();
+            
+            if(ptFire < 0){
+                fires[i].remove();
+            }
+
         }
-    }
     }
 
 }
 function contollerPlayer(){
 
-    positionyJ += directionyJ * velPlayer;
-    positionxJ += directionxJ * velPlayer;
+    positionyJ += directionyJ + velPlayer;
+    positionxJ += directionxJ + velPlayer;
     player.style.top = positionyJ + "px";
     player.style.left = positionxJ + "px";
+
 }
 
 function creationAsteroid(){
+    
     if(jogo){
+
         let numRandom = Math.random() * telaWidth;
         let asteroid = document.createElement("div");
         asteroid.setAttribute('class', 'asteroidForm');
-        asteroid.setAttribute("style", `left: ${numRandom}px`)
+        asteroid.setAttribute("style", `left: ${numRandom}px`);
         document.body.appendChild(asteroid);
         qntBombas--;
         allBomb.textContent = `Bombas Restantes = ${qntBombas}`
-
-        if(qntBombas <= 0 && barraPlaneta.style.width >= 0){
-            msgFinal.textContent = "Meus parabens você conseguiu salvar o planeta!"
+        
+        if(qntBombas <= 0 && barraPlaneta.style.width >= 1){
             jogo = false;
+            msgFinal.textContent = "Meus parabens você conseguiu salvar o planeta!"
             playerAgain.style.display = "flex";
         }
+
     }
+
 }
 
 function controllerAsteroid(){
@@ -145,11 +174,11 @@ function destroyAsteroid(fire){
                 //esquerda tiro com direita da bomba e direita tiro com esquerda da bomba
                 (fire.offsetLeft <= (allAsteroid[i].offsetLeft + 60)) && ((fire.offsetLeft + 8) >= (allAsteroid[i].offsetLeft))
             ){
-            
-                pontuation += 1
+                pontuation += 1;
                 placarPlaneta.textContent = `Placar = ${pontuation}`;
                 allAsteroid[i].remove();
                 fire.remove();
+                
             }
         
             }
@@ -167,7 +196,6 @@ function looping(){
 }
 
 function inicia(){
-    jogo = true;
 
     telaWidth = window.innerWidth;
     telaHeight = window.innerHeight;
@@ -175,14 +203,14 @@ function inicia(){
     directionyJ = 0;
     positionxJ = telaWidth / 2;
     positionyJ = telaHeight / 2;
-    velPlayer = 0.5;
+    velPlayer = 0.6;
     player = document.getElementById("navJog");
     player.style.top = positionyJ + "px";
     player.style.left = positionxJ + "px";
     velFire = 5;
     velAsteroid = 1;
     lifePlaneta = 250;
-    qntBombas = 150;
+    qntBombas = 100;
     pontuation = 0;
 
     statusPlaneta.textContent = 'Vida do Planeta: 250';
@@ -191,18 +219,19 @@ function inicia(){
 
     clearInterval(timeBomba);
     looping();
-   
-      
        
-    
 }
+
 function atualization(){
     location.reload();
 }
+
 function startGame(){
+     jogo = true;
      telaMsg.style.display = "none"
-     timeBomba = setInterval(creationAsteroid, 800);
+     timeBomba = setInterval(creationAsteroid, 2000);
 }
+
 window.addEventListener("load", inicia);
 document.addEventListener("keydown", teclaDown);
 document.addEventListener("keyup", teclaUp);
