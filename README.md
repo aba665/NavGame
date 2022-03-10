@@ -7,7 +7,9 @@ Esse Projeto foi criado através de um desafio de código em uma plataforma de e
 
 ## Olha só como ficou:
   
-  ![]()
+  <div>
+      <img src="https://github.com/aba665/NavGame/blob/main/assets/images/NavImg.png">
+  </div>
   
 ## Tecnologias utilizadas:
 
